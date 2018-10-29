@@ -33,9 +33,10 @@ void Graph::add_edge(int v1, int v2){
 
 void Graph::dfs_helper(int vertice, bool visited[]){
 
-	visited[vertice] = true;
-	cout << vertice << "->";
-	
+	if(visited[vertice] == false){
+		visited[vertice] = true;
+		cout << vertice << "->";
+	}
 
 	for(list<int>::iterator it = this->adjacency_list[vertice].begin();
 		it != this->adjacency_list[vertice].end(); it++){
@@ -69,14 +70,16 @@ void Graph::DFS(int vertice){
 
 int main(){
 
-	Graph a_graph(4);
+	Graph a_graph(5);
 
 	a_graph.add_edge(0, 1);
 	a_graph.add_edge(0, 2);
 	a_graph.add_edge(1, 2);
+	a_graph.add_edge(1, 4);
 	a_graph.add_edge(2, 0);
 	a_graph.add_edge(2, 3);
 	a_graph.add_edge(3, 3);
+	a_graph.add_edge(4, 3);
 
 	a_graph.DFS(2);
 
