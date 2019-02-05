@@ -11,7 +11,7 @@ int karatsuba(int multiplicator, int multiplier){
 	int digit_num = log10(multiplicator) + 1;
 	
 	// Base case
-	if(digit_num > 1)
+	if(digit_num == 2)
 		return multiplicator * multiplier;
 
 	// Split numbers into two parts
