@@ -19,12 +19,10 @@ int* merge_sort(int* arr, int size){
 	// Split arrays into two halves
 	int* first_half  = split_array(arr, 0, mid);
 	int* second_half = split_array(arr, mid, size);
-	int size1 = mid;
-	int size2 = size - mid;
 	
 	// Sort the halves
-	int* sorted_first_half  = merge_sort(first_half, size1);
-	int* sorted_second_half = merge_sort(second_half, size2);
+	int* sorted_first_half  = merge_sort(first_half, mid);
+	int* sorted_second_half = merge_sort(second_half, size - mid);
 	
 	// Merge the halves
 	int* sorted_array = merge(sorted_first_half, sorted_second_half, size1, size2);
