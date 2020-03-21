@@ -3,6 +3,9 @@
 
 #include <iostream>
 #include <fstream>
+#include <sstream>
+#include <iterator>
+#include <vector>
 #include <cstddef>
 #include <memory>
 
@@ -14,7 +17,7 @@ class Matrix{
 		Matrix(size_t, size_t);
 		Matrix(double**, size_t, size_t);
 		Matrix(const Matrix&);
-		Matrix(string);
+		Matrix(const string&);
 		~Matrix();
 		void fill(double) const;
 		void fill(double**) const;

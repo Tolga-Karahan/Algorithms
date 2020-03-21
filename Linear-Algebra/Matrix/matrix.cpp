@@ -35,34 +35,47 @@ Matrix::Matrix(const Matrix& other){
 	fill(other.mat);
 }
 
-Matrix::Matrix(string path){
-	ifstream file(path);
-	string token;
+Matrix::Matrix(const string& path){
+
+	ifstream file(path.c_str());
+	string line;
 
 	if(file.is_open()){
-		// Read row count
-		getline(file, token, '\t');
-		int row = stoi(token);
+		// Extract the column size
+		getline(file, line);
+		vector<string> cont;
+		istringstream iss(line);
+    	copy(istream_iterator<string>(iss),
+        	 istream_iterator<string>(),
+         	 back_inserter(cont));
+    	col_count = cont.size();
 
-		// Read column count
-		getline(file, token, '\t');
-		int col = stoi(token);
+    	// Extract the row size
+    	int srow = 1;
+    	while(getline(file, line))
+    		srow++;
+		row_count = srow;    
 
-		// Initialize matrix
-		double** data = initialize_mat(row, col);
-
-		// Read rest of the matrix
-		int i = 0;
-		int j = 0;
-		while(getline(file, token, '\t')){
-			data[i][j++] = stoi(token);
-			if(j%col == 0){
-				i++;
-				j=0;
-			}
+		// Initialize the matrix
+		this->mat = initialize_mat(row_count, col_count);
+		
+		// Read the data
+		file.clear();
+		file.seekg(0, ios::beg);
+		srow = 0;
+		while(getline(file, line)){
+			vector<string> cont;
+			istringstream iss(line);
+			copy(istream_iterator<string>(iss),
+        	 	 istream_iterator<string>(),
+         	 	 back_inserter(cont));
+			
+			for(int i = 0; i < col_count; i++){
+				mat[srow][i] = stoi(cont.at(i));
+			}	
+			srow++;
 		}
-	}
-	else{
+	}else{
 		cerr << "File couldn't be read" << endl;
 		exit(1);
 	}
@@ -163,11 +176,4 @@ void Matrix::print_mat(string header=""){
 		cout << endl;
 	}
 	cout << endl;
-}
-
-int main(){
-
-	Matrix(string("../Matrices/matrix1.txt"));
-	
-	return 0;
 }
